@@ -17,7 +17,6 @@ BLEServer* pServer = NULL;
 BLECharacteristic* pCharacteristic = NULL;
 bool deviceConnected = false;
 bool oldDeviceConnected = false;
-int value = 0;
 
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
@@ -66,11 +65,10 @@ void loop() {
         int analogValue = analogRead(PIN_INPUT);
         int mappedValue = map(analogValue, INPUT_RANGE[0], INPUT_RANGE[1], OUTPUT_RANGE[0], OUTPUT_RANGE[1]);
         char cTemp[12];
-        sprintf(cTemp, "%d", value);
+        sprintf(cTemp, "%d", mappedValue);
         Serial.print("Value:"); Serial.println(cTemp);
         pCharacteristic->setValue(cTemp);
         pCharacteristic->notify();
-        value++;
         delay(10); // bluetooth stack will go into congestion, if too many packets are sent, in 6 hours test i was able to go as low as 3ms
     }
     // disconnecting
