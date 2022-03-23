@@ -66,7 +66,7 @@ void loop() {
         int analogValue = analogRead(PIN_INPUT);
         int mappedValue = map(analogValue, INPUT_RANGE[0], INPUT_RANGE[1], OUTPUT_RANGE[0], OUTPUT_RANGE[1]);
         char cTemp[12];
-        sprintf(cTemp, "%d", value);
+        snprintf(cTemp, 12, "%d", value);
         Serial.print("Value:"); Serial.println(cTemp);
         pCharacteristic->setValue(cTemp);
         pCharacteristic->notify();
